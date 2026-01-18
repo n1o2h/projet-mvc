@@ -32,7 +32,7 @@ class Field
                     %s
                </div>
             </div>
-    ', strtoupper($this->attrtibute),
+    ', ucwords($this->model->labels()[$this->attrtibute] ?? $this->attrtibute, ' '),
             $this->type,
             $this->attrtibute,
             $this->model->{$this->attrtibute},

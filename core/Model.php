@@ -2,8 +2,25 @@
 
 namespace App\core;
 
+use PDO;
+
 abstract  class Model
 {
+    /**
+     *Pourquoi déclarer les propriétés ?
+     * réponds :
+     *
+     * « Depuis PHP 8.2, les propriétés dynamiques sont dépréciées.
+     * Déclarer les attributs permet une meilleure encapsulation,
+     * une meilleure lisibilité du modèle,
+     * et évite les erreurs à l’exécution. »
+     */
+    public int $id;
+    public string $email;
+    public string $firstname;
+    public string $lastname;
+    public int $status;
+    public string $created_at;
     public const RULE_REQUIRED = 'required';
     public const RULE_EMAIL = 'email';
     public const RULE_MIN = 'min';
@@ -23,6 +40,11 @@ abstract  class Model
         
     }
     abstract  public function  rules(): array;
+    public function labels(): array
+    {
+        return [];
+
+    }
     public  array $errors = [];
 
     public function validate(): bool
@@ -49,6 +71,7 @@ abstract  class Model
                     $this->addErrors($attribue,  self::RULE_MAX, $rule);
                 }
                 if($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}){
+                    $rule['match'] = $this->labels()[$rule['match']] ?? $attribue;
                     $this->addErrors($attribue,  self::RULE_MATCH, $rule);
                 }
                 if($ruleName === self::RULE_UNIQUE){
@@ -58,9 +81,10 @@ abstract  class Model
                     $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE $uniqueAttr = :attr");
                     $statement->bindValue(":attr", $value);
                     $statement->execute();
-                    $record = $statement->fetchObject();
+                    $record = $statement->setFetchMode(PDO::FETCH_CLASS, $className);
+                    $record = $statement->fetchAll();
                     if($record){
-                        $this->addErrors($attribue,  self::RULE_UNIQUE, ['field' => $attribue]);
+                        $this->addErrors($attribue,  self::RULE_UNIQUE, ['field' => $this->labels()[$attribue] ?? $attribue]);
                     }
                 }
             }

@@ -1,4 +1,5 @@
 <?php
+use App\core\Application;
 ?>
 
 <!doctype html>
@@ -37,6 +38,13 @@
     </div>
 </nav>
 <div class="container">
+    <?php
+
+    if(Application::$app->session->getMessage('success')):  ?>
+    <div class="alert alert-success">
+        <?php echo Application::$app->session->getMessage('success');
+        endif;?>
+    </div>
     {{content}}
 </div>
 

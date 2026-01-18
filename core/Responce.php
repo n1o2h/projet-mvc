@@ -9,4 +9,10 @@ class Responce
 
     }
 
+    public function redirect(string $url)
+    {
+        header('Location: '.$url);
+
+    }
+
 }
