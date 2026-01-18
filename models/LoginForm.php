@@ -9,6 +9,7 @@ class LoginForm extends  Model
 {
     public string $email = '';
     public string $password = '';
+    public int $status = 1;
 
     public function rules(): array
     {
@@ -27,7 +28,7 @@ class LoginForm extends  Model
 
     public function login()
     {
-        $user = (new User)->findOne(['email' => $this->email]);
+        $user = User::findOne(['email' => $this->email]);
         if(!$user){
             $this->addError('email', 'User does not esist with this email');
             return false;

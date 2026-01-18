@@ -22,6 +22,7 @@ class Application
        $this->request = new Request();
        $this->response = new Responce();
        $this->session = new Session();
+       $this->controller = new Controler();
 
        self::$app = $this;
        $this->router=new Router($this->request, $this->response);
@@ -55,8 +56,10 @@ class Application
     public function login(DBModel $user)
     {
         $this->user = $user;
+        $roleUser = $user->role;
         $primaryKey = $user->primaryKey();
         $primaryValue = $user->{$primaryKey};
+        $this->session->set('roleUser', $roleUser);
         $this->session->set('user', $primaryValue);
         return true;
     }

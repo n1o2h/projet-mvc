@@ -24,12 +24,12 @@ class SiteController extends  Controler
         return $this->render('home', $params);
 
     }
-    public  function contact()
+    public  function front()
     {
         $params = [
             'name' => "NohailaAitHammad"
         ];
-        return $this->render('contact', $params);
+        return $this->render('admin', $params);
 
     }
 

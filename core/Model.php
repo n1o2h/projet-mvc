@@ -19,7 +19,7 @@ abstract  class Model
     public string $email;
     public string $firstname;
     public string $lastname;
-    public int $status;
+    public int $role;
     public string $created_at;
     public const RULE_REQUIRED = 'required';
     public const RULE_EMAIL = 'email';

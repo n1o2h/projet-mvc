@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
+
+use App\controllers\AdminController;
 use App\controllers\AuthController;
 use App\controllers\SiteController;
 use App\core\Application;
@@ -21,8 +23,11 @@ $app = new Application(dirname(__DIR__), $config);
 $app->router->get('/',array(SiteController::class, 'home'));
 
 $app->router->get('/contact', array(SiteController::class, 'handelContact'));
-$app->router->get('/contact',array(SiteController::class, 'contact'));
+#$app->router->get('/contact',array(SiteController::class, 'contact'));
 $app->router->post('/contact',array(SiteController::class, 'handelContact'));
+
+$app->router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
+$app->router->get('/home', [SiteController::class, 'home']);
 
 
 $app->router->get('/login',array(AuthController::class, 'login'));

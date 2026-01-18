@@ -18,7 +18,12 @@ class AuthController extends  Controler
         if($request->isPost()){
             $loginForm->loadData($request->getBody());
             if($loginForm->validate() && $loginForm->login()){
-                $responce->redirect('/');
+                $user = Application::$app->user;
+                if ($user->role == 1) {
+                    $responce->redirect('/admin/dashboard');
+                } else {
+                    $responce->redirect('/user/dashboard');
+                }
                 return;
             }
         }
@@ -34,11 +39,9 @@ class AuthController extends  Controler
             $user->loadData($request->getBody());
             if($user->validate() && $user->save()){
                 Application::$app->session->setFlash('success', "Thanks for registering");
-                Application::$app->response->redirect('/');
+                Application::$app->response->redirect('/login');
             }
-            #echo '<pre>';
-            #var_dump($user->errors);
-            #echo '</pre>';
+
             $this->setLayout('auth');
             return $this->render('register', [
                 'model' => $user
