@@ -11,7 +11,7 @@ L’application est conçue selon le **modèle MVC (Model – View – Controlle
 
 ![Architecture MVC PHP](docs/architecture.png)
 
-
+```bash
 projet-mvc/
 │
 ├── app/
@@ -31,7 +31,7 @@ projet-mvc/
 ├── .env                  # Variables d’environnement (DB)
 ├── composer.json         # Dépendances composer
 └── README.md             # Documentation
-
+````
 ````
 
 **Explications :**
