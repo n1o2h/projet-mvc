@@ -144,6 +144,7 @@ DB_USER="root"
 DB_PASSWORD=""
 ```
 
+
 3. Lancer le serveur PHP :
 
 ```bash
