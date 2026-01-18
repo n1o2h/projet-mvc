@@ -8,6 +8,7 @@ use App\core\Application;
 
 
 $config = [
+    'userClass' => \App\models\User::class,
     'db' => [
         'dsn' =>$_ENV['DB_DSN'],
         'user' =>$_ENV['DB_USER'],
@@ -29,5 +30,6 @@ $app->router->post('/login',array(AuthController::class, 'login'));
 
 $app->router->post('/register',array(AuthController::class, 'register'));
 $app->router->get('/register',array(AuthController::class, 'register'));
+$app->router->get('/logout',array(AuthController::class, 'logout'));
 
 $app->run();

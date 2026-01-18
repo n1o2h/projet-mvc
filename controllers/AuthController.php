@@ -5,15 +5,27 @@ namespace App\controllers;
 use App\core\Application;
 use App\core\Controler;
 use App\core\Request;
+use App\core\Responce;
+use App\models\LoginForm;
 use App\models\User;
 
 class AuthController extends  Controler
 {
 
-    public function login(Request $request)
+    public function login(Request $request, Responce $responce)
     {
+        $loginForm = new LoginForm();
+        if($request->isPost()){
+            $loginForm->loadData($request->getBody());
+            if($loginForm->validate() && $loginForm->login()){
+                $responce->redirect('/');
+                return;
+            }
+        }
         $this->setLayout('auth');
-        return $this->render('login', []);
+        return $this->render('login', [
+            'model' => $loginForm
+        ]);
     }
     public function register(Request $request)
     {
@@ -36,6 +48,13 @@ class AuthController extends  Controler
         return $this->render('register', [
             'model' => $user
         ]);
+
+    }
+
+    public function logout(Request$request, Responce $responce)
+    {
+        Application::$app->logout();
+        $responce->redirect('/');
 
     }
 

@@ -26,6 +26,7 @@ use App\core\Application;
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
             </ul>
+            <?php if(Application::isExisteUser()):  ?>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/login">login</a>
@@ -34,6 +35,15 @@ use App\core\Application;
                     <a class="nav-link" href="/register">register</a>
                 </li>
             </ul>
+            <?php else: ?>
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/logout">Welcome <?php echo Application::$app->user->getDisplayName()  ?>
+                        (logout)
+                    </a>
+                </li>
+            </ul>
+            <?php endif;?>
         </div>
     </div>
 </nav>

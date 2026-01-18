@@ -1,14 +1,18 @@
 <?php
 
 namespace App\core;
+use PDO;
+
 /**
  * orm  map user class to database
  * base active record
  */
 abstract class DBModel extends  Model
 {
-    abstract public function tableName(): string;
+    abstract public static function tableName(): string;
     abstract public function attributes():array;
+    abstract  public static function primaryKey() : string;
+
     public function save()
     {
         $tableName = $this->tableName();
@@ -28,5 +32,23 @@ abstract class DBModel extends  Model
     {
         return Application::$app->db->pdo->prepare($sql);
     }
+
+    public  static function findOne($where) // [email => test@gmail.com , firstname => nouhaila]
+    {
+        //static will call the current class the findOne exist
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+        foreach ($where as $key => $item){
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, static::class);
+        return $statement->fetch();
+    }
+
+
+
 
 }
