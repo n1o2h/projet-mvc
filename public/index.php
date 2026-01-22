@@ -1,13 +1,14 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
-
+require dirname(__DIR__) . '/vendor/autoload.php';
 use App\controllers\AdminController;
 use App\controllers\AuthController;
 use App\controllers\SiteController;
 use App\controllers\UserController;
 use App\core\Application;
+
+
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
 
 $config = [
@@ -41,4 +42,6 @@ $app->router->get('/register',array(AuthController::class, 'register'));
 /* logout */
 $app->router->get('/logout',array(AuthController::class, 'logout'));
 
+/* profile */
+$app->router->get('/profile', array(AuthController::class, 'profile'));
 $app->run();

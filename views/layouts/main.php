@@ -29,6 +29,9 @@ use App\core\Application;
                 </ul>
             <?php else: ?>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class=" btn btn-primary btn-m me-2" href="/profile">Profile</a>
+                    </li>
                     <li class="nav-item d-flex align-items-center">
                     <span class="navbar-text text-dark me-2">
                         Welcome <?= Application::$app->user ? Application::$app->user->getDisplayName() : 'Guest' ?>

@@ -16,6 +16,7 @@ class User extends  UserModel
     public  string $email = '';
     public  int $role = self::ROLE_INACTIVE;
     public string $password = '';
+    public bool $status = false;
     public string $passwordConfirm = '';
 
     public function __construct()

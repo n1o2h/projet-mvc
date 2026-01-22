@@ -61,6 +61,11 @@ class AuthController extends  Controler
 
     }
 
+    public function profile()
+    {
+        return $this->render('profile',[]);
+
+    }
 
 
 }
